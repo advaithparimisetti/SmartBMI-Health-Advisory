@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health & BMI Awareness</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 50px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 60px;
+            color: #2e7d32;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .slogan {
+            font-size: 20px;
+            color: #333;
+            margin-top: -20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+        .home-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            animation: slideUp 2s ease-in-out;
+        }
+        .home-button {
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0px 8px 15px rgba(0,0,0,0.1);
+        }
+        .home-button:hover {
+            background: linear-gradient(45deg, #388E3C, #43A047);
+            transform: translateY(-10px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Floating Icons for Fun */
+        .floating-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            opacity: 0.3;
+            animation: float 7s ease-in-out infinite;
+        }
+        .icon:nth-child(1) {
+            top: 10%; left: 20%;
+            animation-duration: 10s;
+        }
+        .icon:nth-child(2) {
+            top: 30%; left: 60%;
+            animation-duration: 8s;
+        }
+        .icon:nth-child(3) {
+            top: 50%; left: 80%;
+            animation-duration: 12s;
+        }
+        .icon:nth-child(4) {
+            top: 70%; left: 40%;
+            animation-duration: 9s;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Hide sections initially */
+        .hide {
+            display: none;
+        }
+
+        /* Styling for BMI Calculator and Blog */
+        .container-calculator, .container-blog {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        canvas {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        .recommendation {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Home Page -->
+    <div class="container">
+        <h1>SmartBMI</h1>
+        <p class="slogan">Your Personalized Health Guide Based on Body Mass Index</p>
+
+        <div class="home-buttons">
+            <a href="#" id="bmiButton" class="home-button">BMI Calculator</a>
+            <a href="#" id="healthButton" class="home-button">Health Awareness</a>
+        </div>
+    </div>
+
+    <!-- BMI Calculator Section -->
+    <div id="bmiPage" class="container-calculator hide">
+        <h1>BMI Calculator</h1>
+        <p>Height (in cm)</p>
+        <input type="text" id="height" />
+
+        <p>Weight (in kg)</p>
+        <input type="text" id="weight" />
+
+        <button id="btn">Calculate</button>
+
+        <div id="result"></div>
+        <canvas id="bmiChart"></canvas>
+        <div id="recommendation" class="recommendation"></div>
+    </div>
+
+    <!-- Health Awareness Section -->
+    <div id="healthPage" class="container-blog hide">
+        <h2>Health & BMI Awareness</h2>
+        <p>Welcome to our blog! Here, we share the latest insights and tips on maintaining a healthy lifestyle and understanding your Body Mass Index (BMI). Stay informed and make better health choices with our expert advice and resources.</p>
+        <p><strong>The Importance of BMI:</strong> BMI is a useful tool for assessing whether you are underweight, normal weight, overweight, or obese. It helps you understand how your body mass relates to your height, providing a quick overview of your overall health. However, BMI is not a perfect measurement, and it's essential to consider other factors such as muscle mass and body composition.</p>
+        <p><strong>Tips for a Balanced Diet:</strong> Maintaining a balanced diet is crucial for overall health. Focus on consuming a variety of nutrient-rich foods, including fruits, vegetables, lean proteins, and whole grains. Avoid excessive intake of processed foods, sugary drinks, and high-fat snacks. Stay hydrated and make sure to adjust your diet based on your activity level and health goals.</p>
+        <p><strong>Exercise and Physical Activity:</strong> Regular physical activity is vital for maintaining a healthy weight and overall well-being. Aim for at least 150 minutes of moderate-intensity exercise or 75 minutes of vigorous-intensity exercise per week. Incorporate strength training exercises to build muscle and improve your metabolism. Find activities you enjoy and make them a regular part of your routine.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Handle button clicks to switch between sections
+        document.querySelector("#bmiButton").addEventListener("click", function() {
+            document.querySelector("#bmiPage").classList.remove("hide");
+            document.querySelector("#healthPage").classList.add("hide");
+        });
+
+        document.querySelector("#healthButton").addEventListener("click", function() {
+            document.querySelector("#healthPage").classList.remove("hide");
+            document.querySelector("#bmiPage").classList.add("hide");
+        });
+
+        // Fun hover effect on buttons
+        document.querySelectorAll('.home-button').forEach(button => {
+            button.addEventListener('mouseover', function() {
+                button.style.transform = 'rotate(5deg)';
+            });
+            button.addEventListener('mouseout', function() {
+                button.style.transform = 'rotate(0deg)';
+            });
+        });
+
+        // BMI Calculator Functionality
+        let chart;
+
+        window.onload = () => {
+            let button = document.querySelector("#btn");
+            button.addEventListener("click", calculateBMI);
+        };
+
+        function calculateBMI() {
+            let height = parseInt(document.querySelector("#height").value);
+            let weight = parseInt(document.querySelector("#weight").value);
+            let result = document.querySelector("#result");
+            let recommendation = document.querySelector("#recommendation");
+
+            if (isNaN(height) || height <= 0) {
+                result.innerHTML = "Provide a valid Height!";
+                recommendation.innerHTML = "";
+            } else if (isNaN(weight) || weight <= 0) {
+                result.innerHTML = "Provide a valid Weight!";
+                recommendation.innerHTML = "";
+            } else {
+                let bmi = (weight / ((height * height) / 10000)).toFixed(2);
+                let category = '';
+
+                if (bmi < 18.6) {
+                    category = `Under Weight : <span>${bmi}</span>`;
+                    recommendation.innerHTML = `
+                        <h3>Diet Recommendation for Underweight</h3>
+                        <ul>
+                            <li>Include more calories in your diet.</li>
+                            <li>Eat nutrient-rich foods.</li>
+                            <li>Consider protein shakes.</li>
+                            <li><a href="https://www.healthline.com/nutrition/how-to-gain-weight" target="_blank">More info on gaining weight</a></li>
+                        </ul>`;
+                } else if (bmi >= 18.6 && bmi < 24.9) {
+                    category = `Normal : <span>${bmi}</span>`;
+                    recommendation.innerHTML = `
+                        <h3>Diet Recommendation for Normal Weight</h3>
+                        <ul>
+                            <li>Maintain a balanced diet.</li>
+                            <li>Include a variety of foods in your meals.</li>
+                            <li>Stay hydrated and exercise regularly.</li>
+                            <li><a href="https://www.choosemyplate.gov/" target="_blank">More info on maintaining a healthy diet</a></li>
+                        </ul>`;
+                } else {
+                    category = `Over Weight : <span>${bmi}</span>`;
+                    recommendation.innerHTML = `
+                        <h3>Diet Recommendation for Overweight</h3>
+                        <ul>
+                            <li>Focus on low-calorie, nutrient-rich foods.</li>
+                            <li>Increase your physical activity.</li>
+                            <li>Avoid sugary and high-fat foods.</li>
+                            <li><a href="https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/" target="_blank">More info on managing weight</a></li>
+                        </ul>`;
+                }
+                result.innerHTML = category;
+                updateChart(bmi, category);
+            }
+        }
+
+        function updateChart(bmi, category) {
+            let ctx = document.getElementById('bmiChart').getContext('2d');
+            if (chart) {
+                chart.destroy();
+            }
+            
+            let data = {
+                labels: [category],
+                datasets: [{
+                    label: 'BMI',
+                    data: [bmi],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'BMI'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Category'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

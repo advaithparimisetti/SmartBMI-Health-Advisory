@@ -1,1 +1,1 @@
-Project link : [LINK](url)https://advaithparimisetti.github.io/SmartBMI-Health-Advisory/
+Project link : [LINK](https://advaithparimisetti.github.io/SmartBMI-Health-Advisory/)

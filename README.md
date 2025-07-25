@@ -60,7 +60,7 @@
 
 ## 🔗 Live Demo & Source Code
 
-🌐 **Live Demo**: [SmartBMI on GitHub Pages](https://advaithparimisetti.github.io/SmartBMI-HealthAdvisory)
+🌐 **Live Demo**:  [LINK](https://advaithparimisetti.github.io/SmartBMI-Health-Advisory/)
 
 💻 **Source Code**: [GitHub Repository](https://github.com/advaithparimisetti/SmartBMI-HealthAdvisory)
 
